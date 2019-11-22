@@ -7,14 +7,17 @@
 /* Used by main to communicate with parse_opt. */
 struct arguments
 {
-	//char *args[MAX_NUM_ARGS];                /* pattern [file] */
-	/* int ignore_case, count, line_numbers; */
     char *regex, *check_version;
+    int quiet;
 };
 
-int parse_args(int argc, char **argv,
-		const struct argp_option *options,
-		const char *args_doc, const char *doc,
-		struct arguments *args);
+error_t parse_args(
+    int,
+    char **,
+    const struct argp_option *,
+    const char *,
+    const char *,
+    struct arguments *
+);
 
 #endif
