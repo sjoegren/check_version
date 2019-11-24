@@ -12,7 +12,8 @@ TEST_SOURCES = $(wildcard $(TEST_DIR)/*.c)
 TEST_OBJECTS = $(TEST_SOURCES:.c=.o)
 
 VERSION = $(subst v,,$(shell git describe))
-RELEASE_DIST = $(PROG)-$(VERSION).tar.gz
+RELEASE_NAME = $(PROG)-$(VERSION)
+RELEASE_DIST = $(RELEASE_NAME).tar.gz
 BUILD_OPTS = -DPROGRAM_VERSION='"$(VERSION)"'
 
 .PHONY: debug
@@ -23,14 +24,19 @@ debug: $(PROG)
 .PHONY: release
 release: $(PROG) $(RELEASE_DIST)
 
-$(RELEASE_DIST): $(PROG) LICENSE
-	tar -cvzf $@ $^
+$(RELEASE_DIST): $(PROG) LICENSE | $(RELEASE_NAME)
+	cp -v $^ $|
+	tar -cvzf $@ $|
+
+$(RELEASE_NAME):
+	mkdir -p $@
 
 .PHONY: clean
 clean:
 	$(RM) $(OBJECTS) $(PROG)
 	$(RM) $(TEST_OBJECTS) $(TEST_PROG)
 	$(RM) $(PROG)-*.tar.gz
+	$(RM) -r $(RELEASE_NAME)
 
 .DEFAULT_GOAL = $(PROG)
 
