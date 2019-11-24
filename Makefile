@@ -23,7 +23,7 @@ debug: $(PROG)
 .PHONY: release
 release: $(PROG) $(RELEASE_DIST)
 
-$(RELEASE_DIST): $(PROG)
+$(RELEASE_DIST): $(PROG) LICENSE
 	tar -cvzf $@ $^
 
 .PHONY: clean

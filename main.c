@@ -7,7 +7,7 @@
 #include "version.h"
 
 const char *argp_program_version = ARGP_PROGRAM_VERSION;
-const char *argp_program_bug_address = "<github.com/akselsjogren>";
+const char *argp_program_bug_address = ARGP_PROGRAM_BUG_ADDRESS;
 
 /* Program documentation. */
 static char doc[] = "\n"

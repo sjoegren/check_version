@@ -8,3 +8,4 @@
 #define PROGRAM_VERSION	"dev"
 #endif
 #define ARGP_PROGRAM_VERSION "version "PROGRAM_VERSION
+#define ARGP_PROGRAM_BUG_ADDRESS "<https://github.com/akselsjogren/check_version>"
