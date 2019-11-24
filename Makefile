@@ -26,7 +26,7 @@ release: $(PROG) $(RELEASE_DIST)
 
 $(RELEASE_DIST): $(PROG) LICENSE | $(RELEASE_NAME)
 	cp -v $^ $|
-	tar -cvzf $@ $|
+	tar -cvzf $@ --owner=0 --group=0 $|
 
 $(RELEASE_NAME):
 	mkdir -p $@
