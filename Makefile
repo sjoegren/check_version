@@ -1,6 +1,3 @@
-#
-# To make a release with version number; make VERSION=...
-#
 PROG = check_version
 CFLAGS = -Wall -Wpedantic
 CC = gcc
@@ -14,19 +11,26 @@ TEST_PROG = $(TEST_DIR)/runtests
 TEST_SOURCES = $(wildcard $(TEST_DIR)/*.c)
 TEST_OBJECTS = $(TEST_SOURCES:.c=.o)
 
-ifdef VERSION
-CFLAGS += -DPROGRAM_VERSION='"$(PROG) $(VERSION)"'
-endif
+VERSION = $(subst v,,$(shell git describe))
+RELEASE_DIST = $(PROG)-$(VERSION).tar.gz
+BUILD_OPTS = -DPROGRAM_VERSION='"$(VERSION)"'
 
-ifdef DEBUG
-CFLAGS += -g -Og -DDEBUG
-endif
+.PHONY: debug
+debug: CFLAGS += -g -Og
+debug: BUILD_OPTS = -DDEBUG
+debug: $(PROG)
+
+.PHONY: release
+release: $(PROG) $(RELEASE_DIST)
+
+$(RELEASE_DIST): $(PROG)
+	tar -cvzf $@ $^
 
 .PHONY: clean
 clean:
 	$(RM) $(OBJECTS) $(PROG)
-	$(RM) core*
 	$(RM) $(TEST_OBJECTS) $(TEST_PROG)
+	$(RM) $(PROG)-*.tar.gz
 
 .DEFAULT_GOAL = $(PROG)
 
@@ -34,7 +38,7 @@ $(PROG): $(OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $@
 
 %.o: %.c $(HEADERS)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(BUILD_OPTS) $(CFLAGS) -c $< -o $@
 
 .PHONY: test
 test: $(TEST_PROG)

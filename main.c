@@ -6,11 +6,7 @@
 #include "common.h"
 #include "version.h"
 
-#ifndef PROGRAM_VERSION
-#define PROGRAM_VERSION	"check_version dev"
-#endif
-
-const char *argp_program_version = PROGRAM_VERSION;
+const char *argp_program_version = ARGP_PROGRAM_VERSION;
 const char *argp_program_bug_address = "<github.com/akselsjogren>";
 
 /* Program documentation. */
