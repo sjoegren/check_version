@@ -36,7 +36,7 @@ clean:
 	$(RM) $(OBJECTS) $(PROG)
 	$(RM) $(TEST_OBJECTS) $(TEST_PROG)
 	$(RM) $(PROG)-*.tar.gz
-	$(RM) -r $(RELEASE_NAME)
+	$(RM) -r $(PROG)-*/
 
 .DEFAULT_GOAL = $(PROG)
 
