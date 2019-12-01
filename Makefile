@@ -1,5 +1,5 @@
 PROG = check_version
-CFLAGS = -Wall -Wpedantic
+CFLAGS = -std=c11 -Wall -Wpedantic
 CC = gcc
 
 SOURCES = $(wildcard *.c)
