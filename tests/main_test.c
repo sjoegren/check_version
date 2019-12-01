@@ -9,6 +9,7 @@
 
 static int test_make_version(int *, int *);
 static int test_versioncmp(int *, int *);
+static int test_extract_version(int *, int *);
 
 int main(int argc, char **argv)
 {
@@ -21,6 +22,12 @@ int main(int argc, char **argv)
     tests = 0;
     passed = 0;
 	test_versioncmp(&tests, &passed);
+	total_tests += tests;
+	total_passed += passed;
+
+    tests = 0;
+    passed = 0;
+	test_extract_version(&tests, &passed);
 	total_tests += tests;
 	total_passed += passed;
 
@@ -141,5 +148,65 @@ int test_versioncmp(int *ntests, int *passed)
 		printf("test %-50s: failed\n", "versioncmp 9.123.4567 < 10.0.1");
 	free_version(a);
 
+	return *passed == *ntests ? 1 : 0;
+}
+
+int test_extract_version(int *ntests, int *passed)
+{
+    char *version_texts = "foo\n"
+        "ls (GNU coreutils) 8.31\n"
+        "bar...\n"
+        "VIM - Vi IMproved 8.1 (2018 May 18, compiled Nov  7 2019 12:54:00)\n"
+        "Included patches: 1-2267\n"
+        "bar...\n"
+        "program version 1.2.3\n";
+    struct version *v;
+    FILE *mock_input;
+
+    mock_input = fmemopen(version_texts, strlen(version_texts), "r");
+
+	/* extract_version no match */
+	(*ntests)++;
+	if (extract_version(mock_input, "this regex shouldn't match") == NULL)
+        (*passed)++;
+    else
+		printf("test %-50s: failed\n", "extract_version no match");
+	rewind(mock_input);
+
+	/* extract_version invalid regex */
+	(*ntests)++;
+	if (extract_version(mock_input, "invalid regex: [foo") == NULL)
+        (*passed)++;
+    else
+		printf("test %-50s: failed\n", "invalid regex");
+	rewind(mock_input);
+
+	/* extract_version ls version */
+	(*ntests)++;
+	if ((v = extract_version(mock_input, "^ls.*([0-9]+\\.[0-9]+)")) == NULL)
+		printf("test %-50s: failed\n", "ls version - no match");
+	else {
+		if (strcmp(v->string, "8.31") == 0)
+			(*passed)++;
+		else
+			printf("test %-50s: failed (%s)\n", "ls version", v->string);
+		free_version(v);
+	}
+	rewind(mock_input);
+
+	/* extract_version vim version */
+	(*ntests)++;
+	if ((v = extract_version(mock_input, "Vi IMproved ([0-9]+\\.[0-9]+)")) == NULL)
+		printf("test %-50s: failed\n", "vim version - no match");
+	else {
+		if (strcmp(v->string, "8.1") == 0)
+			(*passed)++;
+		else
+			printf("test %-50s: failed (%s)\n", "vim version", v->string);
+		free_version(v);
+	}
+	rewind(mock_input);
+
+    fclose(mock_input);
 	return *passed == *ntests ? 1 : 0;
 }
