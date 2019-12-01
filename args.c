@@ -2,6 +2,7 @@
  * Parsing arguments with <argp.h>.
  */
 
+#include <string.h>
 #include "args.h"
 
 static error_t parse_opt (int key, char *arg, struct argp_state *state);
@@ -25,6 +26,21 @@ static error_t parse_opt (int key, char *arg, struct argp_state *state)
 
 		case 'q':
             args->quiet = 1;
+			break;
+
+		case 129:
+			if (!strcmp(arg, "lt"))
+				args->mode = COMP_LT;
+			else if (!strcmp(arg, "le"))
+				args->mode = COMP_LE;
+			else if (!strcmp(arg, "eq"))
+				args->mode = COMP_EQ;
+			else if (!strcmp(arg, "ge"))
+				args->mode = COMP_GE;
+			else if (!strcmp(arg, "gt"))
+				args->mode = COMP_GT;
+			else
+				argp_error(state, "Invalid value for --ge\n");
 			break;
 
 		case ARGP_KEY_ARG:
@@ -61,6 +77,7 @@ error_t parse_args(
 	args->regex = NULL;
 	args->check_version = NULL;
 	args->quiet = 0;
+	args->mode = COMP_GE;
 
 	/* Parse our arguments; every option seen by parse_opt will
 	   be reflected in arguments. */
