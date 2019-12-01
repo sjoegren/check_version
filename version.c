@@ -13,10 +13,7 @@
 #define INITIAL_MATCHES_ALLOC_SIZE	4
 #define RE_ERROR_MAXLEN				500
 
-struct version * extract_version(
-		FILE *input,
-		const char *regex,
-		const struct version *check_version)
+struct version * extract_version(FILE *input, const char *regex)
 {
 	char *lineptr = NULL;
 	regex_t preg;

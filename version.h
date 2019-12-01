@@ -14,7 +14,7 @@ enum _MATCH_RETURN_CODES {
 	MATCH_RE_ERROR,
 };
 
-struct version *extract_version(FILE *, const char *, const struct version *);
+struct version *extract_version(FILE *, const char *);
 struct version *make_version(const char *, size_t);
 void free_version(struct version *);
 void print_version(struct version *);

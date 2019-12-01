@@ -43,7 +43,7 @@ int main(int argc, char **argv)
 
 	check_version = make_version(args.check_version, 0);
 
-	found_version = extract_version(stdin, args.regex, check_version);
+	found_version = extract_version(stdin, args.regex);
 	if (found_version == NULL) {
 		fprintf(stderr, "Failed to extract version from stdin\n");
 		free(check_version);
