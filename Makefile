@@ -13,7 +13,8 @@ TEST_OBJECTS = $(TEST_SOURCES:.c=.o)
 
 VERSION = $(subst v,,$(shell git describe))
 RELEASE_NAME = $(PROG)-$(VERSION)
-RELEASE_DIST = $(RELEASE_NAME).tar.gz
+ARCH = $(shell uname -m)
+RELEASE_DIST = $(RELEASE_NAME)-$(ARCH).tar.gz
 BUILD_OPTS = -DPROGRAM_VERSION='"$(VERSION)"'
 
 .PHONY: debug
