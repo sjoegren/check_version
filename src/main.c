@@ -1,4 +1,5 @@
 #include <argp.h>
+#include <config.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,14 +7,14 @@
 #include "common.h"
 #include "version.h"
 
-const char *argp_program_version = ARGP_PROGRAM_VERSION;
-const char *argp_program_bug_address = ARGP_PROGRAM_BUG_ADDRESS;
+const char *argp_program_version = PACKAGE_STRING;
+const char *argp_program_bug_address = PACKAGE_BUGREPORT;
 
 /* Program documentation. */
 static char doc[] = "\n"
 "Check how a program version compares to a version string.\n"
 "Example: Check if git version is at least 2.0:\n\n"
-"  git --version | check_version -r 'version ([0-9]+\\.[0-9]+\\.[0-9]+)' -c 2.0";
+"  git --version | " PACKAGE " -r 'version ([0-9]+\\.[0-9]+\\.[0-9]+)' -c 2.0";
 
 /* A description of the arguments we accept. */
 static char args_doc[] = "-r regex -c version";

@@ -4,8 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common.h"
-#include "../version.h"
+#include "common.h"
+#include "version.h"
 
 static int test_make_version(int *, int *);
 static int test_versioncmp(int *, int *);

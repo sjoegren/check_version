@@ -24,10 +24,22 @@ $ echo $?
 
 
 ## Build
-Build:
+From source dist:
+```console
+./configure --prefix=PATH
+make
+make install
+```
 
-    make
+From git checkout:
+```console
+autoreconf -i -s
+./configure --prefix=PATH
+make
+make install
+```
 
 Test:
-
-    make test
+```console
+make check
+```

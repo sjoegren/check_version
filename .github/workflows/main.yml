@@ -10,6 +10,11 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build
-      run: make
+      run: |
+        autoreconf -i
+        ./configure
+        make
     - name: Test
-      run: make test
+      run: |
+        make check
+        make distcheck
