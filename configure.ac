@@ -1,7 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_INIT([check_version], m4_esyscmd([./version.sh]), [https://github.com/akselsjogren/check_version])
+AC_INIT([check_version], m4_esyscmd([./version.sh]), [https://github.com/sjoegren/check_version])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([src/args.h])
 

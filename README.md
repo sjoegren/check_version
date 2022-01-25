@@ -1,4 +1,4 @@
-![](https://github.com/akselsjogren/check_version/workflows/Build/badge.svg)
+![](https://github.com/sjoegren/check_version/workflows/Build/badge.svg)
 
 # check_version
 Check if a program version meets a simple requirement.
